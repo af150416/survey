@@ -15,12 +15,23 @@ public class ParticipantService {
 	@Autowired
 	IParticipant iParticipant;
 
+	public Integer setParticipant(String firstName, String lastName, String email, String password){
+		return iParticipant.setParticipant(firstName, lastName, email, password);
+	}
+	
 	public List<Participant> getParticipantsByGroup(Integer groupId) {
 		return iParticipant.getParticipantsByGroup(groupId);
 	}
 	
-	public List<AttributeValues> getParticipantAttributes(Integer participantId){
-		return iParticipant.getParticipantAttributes(participantId);
+	public List<AttributeValues> getParticipantAttributesInGroup(Integer groupId, Integer participantId){
+		return iParticipant.getParticipantAttributesInGroup(groupId, participantId);
 	}
 
+	public Integer updateParticipant(String firstName, String lastName, String email, String password){
+		return iParticipant.updateParticipant(firstName, lastName, email, password);
+	}
+	
+	public void deleteParticipant(Integer participantId){
+		iParticipant.deleteParticipant(participantId);
+	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,14 +20,30 @@ public class ParticipantController {
 	@Autowired
 	ParticipantService participantService;
 
-	@RequestMapping(value = "/participantsInGroup/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/participantsByGroup/{id}", method = RequestMethod.GET)
 	public List<Participant> getParticipantsByGroup(@PathVariable Integer id) {
 		return participantService.getParticipantsByGroup(id);
 	}
 	
-	@RequestMapping(value = "/participant/{id}/attributes", method = RequestMethod.GET)
-	public List<AttributeValues> getParticipantAttributes(@PathVariable Integer participantId){
-		return participantService.getParticipantAttributes(participantId);
+	@RequestMapping(value = "/getParticipantAttributesInGroup/{groupId}/{participantId}", method = RequestMethod.GET)
+	public List<AttributeValues> getParticipantAttributeValuesInGroup(@PathVariable Integer groupId, Integer participantId){
+		return participantService.getParticipantAttributesInGroup(groupId, participantId);
+	}
+	
+	@RequestMapping(value = "/setParticipant", method = RequestMethod.PUT)
+	public Integer setParticipant(@RequestBody String firstName, String lastName, String email, String password) {
+		return participantService.setParticipant(firstName, lastName, email, password);
+	}
+	
+	@RequestMapping(value = "/updateParticipant", method = RequestMethod.PUT)
+	public Integer updateParticipant(@RequestBody String firstName, String lastName, String email, String password){
+		return participantService.updateParticipant(firstName, lastName, email, password);
+	}
+	
+	@RequestMapping(value = "/deleteparticipant/{id}", method = RequestMethod.DELETE)
+	public void deleteParticipant(@PathVariable Integer id){
+		participantService.deleteParticipant(id);
+		
 	}
 
 }

@@ -7,7 +7,15 @@ import com.softbistro.survey.components.entity.Participant;
 
 public interface IParticipant {
 
+	public Integer setParticipant(String firstName, String lastName, String email, String password);
+
 	public List<Participant> getParticipantsByGroup(Integer groupId);
 
-	public List<AttributeValues> getParticipantAttributes(Integer participantId);
+	public List<AttributeValues> getParticipantAttributesInGroup(Integer groupId, Integer participantId);
+
+	public Integer updateParticipant(String firstName, String lastName, String email, String password);
+	
+	public void deleteParticipant(Integer participantId);
+	
+	public Participant getParticipantByEMail(String eMail);
 }
