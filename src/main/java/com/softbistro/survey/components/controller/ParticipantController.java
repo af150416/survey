@@ -20,32 +20,32 @@ public class ParticipantController {
 	@Autowired
 	ParticipantService participantService;
 
-	@RequestMapping(value = "/participantsByGroup/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/getByGroup/{id}", method = RequestMethod.GET)
 	public List<Participant> getParticipantsByGroup(@PathVariable Integer id) {
 		return participantService.getParticipantsByGroup(id);
 	}
 	
-	@RequestMapping(value = "/getParticipantAttributesInGroup/{groupId}/{participantId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/getAttributesByGroup/{groupId}/{participantId}", method = RequestMethod.GET)
 	public List<AttributeValues> getParticipantAttributeValuesInGroup(@PathVariable Integer groupId, Integer participantId){
 		return participantService.getParticipantAttributesInGroup(groupId, participantId);
 	}
 	
-	@RequestMapping(value = "/getParticipantById/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/getById/{id}", method = RequestMethod.GET)
 	public Participant getParticipantById(@PathVariable Integer participantId){
 		return participantService.getParticipantById(participantId);
 	}
 	
-	@RequestMapping(value = "/setParticipant", method = RequestMethod.PUT)
+	@RequestMapping(value = "/set", method = RequestMethod.PUT)
 	public Integer setParticipant(@RequestBody String firstName, String lastName, String email, String password) {
 		return participantService.setParticipant(firstName, lastName, email, password);
 	}
 	
-	@RequestMapping(value = "/updateParticipant", method = RequestMethod.PUT)
+	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public Integer updateParticipant(@RequestBody String firstName, String lastName, String email, String password){
 		return participantService.updateParticipant(firstName, lastName, email, password);
 	}
 	
-	@RequestMapping(value = "/deleteParticipant/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public Integer deleteParticipant(@PathVariable Integer id){
 		return participantService.deleteParticipant(id);
 		

@@ -14,16 +14,15 @@ public class AttributeValuesService {
 		return iAttributeValues.setAttributeValues(attributeId, participantId, attributeValue);
 	}
 
-	public AttributeValues getAttributeValues(Integer participantId, Integer attributeId) {
-		return iAttributeValues.getAttributeValues(participantId, attributeId);
+	public AttributeValues getAttributeValuesById(Integer attributeValuesId) {
+		return iAttributeValues.getAttributeValuesById(attributeValuesId);
 	}
 
-	public Integer updateAttributeValues(Integer attributeId, Integer participantId, String attributeValue) {
-		return iAttributeValues.updateAttributeValues(attributeId, participantId, attributeValue);
+	public Integer updateAttributeValuesById(Integer attributeValuesId, String attributeValue) {
+		return iAttributeValues.updateAttributeValuesById(attributeValuesId, attributeValue);
 	}
 
-	public Integer deleteAttributeValues(Integer attributeValuesId) {
-		return iAttributeValues.deleteAttributeValues(attributeValuesId);
+	public Integer deleteAttributeValuesById(Integer attributeValuesId) {
+		return iAttributeValues.deleteAttributeValuesById(attributeValuesId);
 	}
-
 }

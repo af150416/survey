@@ -19,27 +19,27 @@ public class AttributesController {
 	@Autowired
 	AttributesService attributesService;
 
-	@RequestMapping(value = "/settingAttribute", method = RequestMethod.PUT)
+	@RequestMapping(value = "/set", method = RequestMethod.PUT)
 	public Integer setAttribute(@RequestBody Integer groupId, String attribute) {
 		return attributesService.setAttribute(groupId, attribute);
 	}
 
-	@RequestMapping(value = "/getAttributeById/{attributesId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/getById/{attributesId}", method = RequestMethod.GET)
 	public Attributes getAttributesById(@PathVariable Integer attributesId) {
 		return attributesService.getAttributeById(attributesId);
 	}
 
-	@RequestMapping(value = "/getAttributeByGroup/{groupId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/getByGroup/{groupId}", method = RequestMethod.GET)
 	public List<Attributes> getAttributesByGroup(@PathVariable Integer groupId) {
 		return attributesService.getAttributesByGroup(groupId);
 	}
 	
-	@RequestMapping(value = "/updateAtributeById", method = RequestMethod.PUT)
+	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public Integer updateAttributesById(@RequestBody Integer attributeId, Integer groupId, String attribute){
 		return attributesService.updateAttributes(attributeId, groupId, attribute);
 	}
 	
-	@RequestMapping(value = "/deleteAttributeById/{attributesId}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/delete/{attributesId}", method = RequestMethod.DELETE)
 	public Integer deleteAttributesById(@PathVariable Integer attributesId){
 		return attributesService.deleteAttributes(attributesId);
 	}

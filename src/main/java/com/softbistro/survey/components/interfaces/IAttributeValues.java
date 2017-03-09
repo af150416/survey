@@ -6,9 +6,9 @@ public interface IAttributeValues {
 
 	public Integer setAttributeValues(Integer attributeId, Integer participantId, String attributeValue);
 
-	public AttributeValues getAttributeValues(Integer participantId, Integer attributeId);
+	public AttributeValues getAttributeValuesById(Integer attributeValuesId);
 
-	public Integer updateAttributeValues(Integer attributeId, Integer participantId, String attributeValue);
+	public Integer updateAttributeValuesById(Integer attributeValuesId, String attributeValue);
 
-	public Integer deleteAttributeValues(Integer attributeValuesId);
+	public Integer deleteAttributeValuesById(Integer attributeValuesId);
 }
