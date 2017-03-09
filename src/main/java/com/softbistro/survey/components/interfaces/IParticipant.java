@@ -15,7 +15,7 @@ public interface IParticipant {
 
 	public Integer updateParticipant(String firstName, String lastName, String email, String password);
 	
-	public void deleteParticipant(Integer participantId);
+	public Integer deleteParticipant(Integer participantId);
 	
-	public Participant getParticipantByEMail(String eMail);
+	public Participant getParticipantById(Integer participantId);
 }

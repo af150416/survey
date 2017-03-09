@@ -27,7 +27,7 @@ public class ParticipantDao implements IParticipant {
 	
 	private final String SQL_FOR_DELETING_PARTICIPANT = "DELETE p, c, av, a FROM survey.participant AS p INNER JOIN survey.connect_group_participant AS c ON p.id=c.participant_id INNER JOIN survey.attribute_values AS av ON p.id=av.participant_id INNER JOIN survey.answers AS a ON p.id=a.participant_id WHERE p.id= ?";
 	
-	private final String SQL_FOR_GETTING_PARTICIPANT_BY_ID = "SELECT * FROM survey.participant WHERE survey.participant.email= ?";
+	private final String SQL_FOR_GETTING_PARTICIPANT_BY_ID = "SELECT * FROM survey.participant WHERE survey.participant.id= ?";
 
 	
 
@@ -54,12 +54,12 @@ public class ParticipantDao implements IParticipant {
 	}
 
 	@Override
-	public void deleteParticipant(Integer participantId) {
-		jdbcTemplate.update(SQL_FOR_DELETING_PARTICIPANT, participantId);
+	public Integer deleteParticipant(Integer participantId) {
+		return jdbcTemplate.update(SQL_FOR_DELETING_PARTICIPANT, participantId);
 	}
 
 	@Override
-	public Participant getParticipantByEMail(String eMail) {
-		return (Participant) jdbcTemplate.query(SQL_FOR_GETTING_PARTICIPANT_BY_ID, new BeanPropertyRowMapper<>(Participant.class) ,eMail);
+	public Participant getParticipantById(Integer participantId) {
+		return (Participant) jdbcTemplate.query(SQL_FOR_GETTING_PARTICIPANT_BY_ID, new BeanPropertyRowMapper<>(Participant.class) ,participantId);
 	}
 }

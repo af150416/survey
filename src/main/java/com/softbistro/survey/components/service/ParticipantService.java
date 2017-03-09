@@ -31,7 +31,11 @@ public class ParticipantService {
 		return iParticipant.updateParticipant(firstName, lastName, email, password);
 	}
 	
-	public void deleteParticipant(Integer participantId){
-		iParticipant.deleteParticipant(participantId);
+	public Integer deleteParticipant(Integer participantId){
+		return iParticipant.deleteParticipant(participantId);
+	}
+	
+	public Participant getParticipantById(Integer participantId){
+		return iParticipant.getParticipantById(participantId);
 	}
 }

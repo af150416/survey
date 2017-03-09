@@ -30,6 +30,11 @@ public class ParticipantController {
 		return participantService.getParticipantAttributesInGroup(groupId, participantId);
 	}
 	
+	@RequestMapping(value = "/getParticipantById/{id}", method = RequestMethod.GET)
+	public Participant getParticipantById(@PathVariable Integer participantId){
+		return participantService.getParticipantById(participantId);
+	}
+	
 	@RequestMapping(value = "/setParticipant", method = RequestMethod.PUT)
 	public Integer setParticipant(@RequestBody String firstName, String lastName, String email, String password) {
 		return participantService.setParticipant(firstName, lastName, email, password);
@@ -40,9 +45,9 @@ public class ParticipantController {
 		return participantService.updateParticipant(firstName, lastName, email, password);
 	}
 	
-	@RequestMapping(value = "/deleteparticipant/{id}", method = RequestMethod.DELETE)
-	public void deleteParticipant(@PathVariable Integer id){
-		participantService.deleteParticipant(id);
+	@RequestMapping(value = "/deleteParticipant/{id}", method = RequestMethod.DELETE)
+	public Integer deleteParticipant(@PathVariable Integer id){
+		return participantService.deleteParticipant(id);
 		
 	}
 
