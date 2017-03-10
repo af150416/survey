@@ -12,7 +12,7 @@ public interface IGroup {
 
 	public List<Group> getGroupsByClient(Integer clientId);
 
-	public Integer updateGroupById(String groupName, Integer groupId);
+	public Integer updateGroupById(Integer groupId, String groupName);
 
 	public Integer deleteGroupById(Integer groupId);
 }

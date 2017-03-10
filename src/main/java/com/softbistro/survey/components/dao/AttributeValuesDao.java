@@ -14,7 +14,8 @@ public class AttributeValuesDao implements IAttributeValues {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
-	private final String SQL_FOR_SETTING_ATTRIBUTE_VALUES = "INSERT INTO survey.attribute_values (survey.attribute_values.attribute_id, survey.attribute_values.participant_id, survey.attribute_values.attribute_value) VALUES (?, ?, ?)";
+	private final String SQL_FOR_SETTING_ATTRIBUTE_VALUES = "INSERT INTO survey.attribute_values "
+			+ "(survey.attribute_values.attribute_id, survey.attribute_values.participant_id, survey.attribute_values.attribute_value) VALUES (?, ?, ?)";
 	private final String SQL_FOR_GETTING_ATTRIBUTE_VALUES_BY_ID = "SELECT * FROM survey.attribute_values WHERE survey.attribute_values.id = ?";
 	private final String SQL_FOR_UPDATING_ATTRIBUTE_VALUES_BY_ID = "UPDATE survey.attribute_values AS av SET av.attribute_value = ? WHERE av.id = ?";
 	private final String SQL_FOR_DELETING_ATTRIBUTE_VALUES_BY_ID = "DELETE av FROM survey.attribute_values AS av WHERE av.id = ?";

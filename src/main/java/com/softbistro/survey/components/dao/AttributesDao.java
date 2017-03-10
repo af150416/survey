@@ -19,7 +19,7 @@ public class AttributesDao implements IAttributes {
 	private final String SQL_FOR_SETTING_ATTRIBUTES = "INSERT INTO survey.attributes (survey.attributes.group_id, survey.attributes.attribute) VALUES (?, ?)";
 	private final String SQL_FOR_GETTING_ATTRIBUTES_BY_ID = "SELECT at.id, at.group_id, at.attribute, at.created_date, at.modified_date FROM survey.attributes AS at WHERE at.id = ?";
 	private final String SQL_FOR_UPDATING__ATTRIBUTES_BY_ID = "UPDATE survey.attributes AS at SET at.group_id = ?, at.attribute = ? WHERE at.id=?";
-	private final String SQL_FOR_DELETING_ATTRIBUTES = "DELETE at, av FROM survey.attributes AS at INNER JOIN survey.attribute_values AS av ON av.attribute_id=at.id WHERE at.id = ?";
+	private final String SQL_FOR_DELETING_ATTRIBUTES = "DELETE at, av FROM survey.attributes AS at, survey.attribute_values AS av WHERE av.attribute_id=at.id AND at.id = ?";
 	private final String SQL_FOR_GETTING_ATTRIBUTES_BY_GROUP = "SELECT * FROM survey.attributes WHERE survey.attributes.group_id = ?";
 
 	@Override

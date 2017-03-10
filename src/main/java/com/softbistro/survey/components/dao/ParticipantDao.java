@@ -17,19 +17,24 @@ public class ParticipantDao implements IParticipant {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
-	private final String SQL_FOR_GETTING_PARTICIPANTS_BY_GROUP_ID = "SELECT p.id, p.first_name, p.last_name, p.email, p.password, p.created_date, p.modified_date FROM survey.participant AS p left join survey.connect_group_participant AS c on c.participant_id = p.id WHERE c.group_id = ?";
-	
-	private final String SQL_FOR_GETTING_PARTICIPANT_ATTRIBUTES = "SELECT av.attribute_value FROM survey.attribute_values AS av LEFT JOIN survey.attributes AS a ON av.attribute_id=a.id LEFT JOIN survey.group AS g ON a.group_id=g.id LEFT JOIN survey.connect_group_participant AS c ON g.id=c.group_id AND c.participant_id=av.participant_id LEFT JOIN survey.participant AS p ON c.participant_id=p.id WHERE g.id= ? and p.id= ?";
-	
-	private final String SQL_FOR_SETTING_PARTICIPANT = "INSERT INTO survey.participant (survey.participant.first_name,survey.participant.last_name, survey.participant.email, survey.participant.password) VALUES (?,?,?,?)";
-	
-	private final String SQL_FOR_UPDATING_PARTICIPANT = "UPDATE survey.participant AS p SET p.first_name= ?, p.last_name= ?, p.email = ?, p.password= ? WHERE p.email= ?";
-	
-	private final String SQL_FOR_DELETING_PARTICIPANT = "DELETE p, c, av, a FROM survey.participant AS p INNER JOIN survey.connect_group_participant AS c ON p.id=c.participant_id INNER JOIN survey.attribute_values AS av ON p.id=av.participant_id INNER JOIN survey.answers AS a ON p.id=a.participant_id WHERE p.id= ?";
-	
-	private final String SQL_FOR_GETTING_PARTICIPANT_BY_ID = "SELECT * FROM survey.participant WHERE survey.participant.id= ?";
+	private final String SQL_FOR_GETTING_PARTICIPANTS_BY_GROUP_ID = "SELECT p.id, p.first_name, p.last_name, p.email, p.password, p.created_date, p.modified_date "
+			+ "FROM survey.participant AS p left join survey.connect_group_participant AS c on c.participant_id = p.id WHERE c.group_id = ?";
 
-	
+	private final String SQL_FOR_GETTING_PARTICIPANT_ATTRIBUTES = "SELECT av.attribute_value FROM survey.attribute_values AS av "
+			+ "LEFT JOIN survey.attributes AS a ON av.attribute_id=a.id LEFT JOIN survey.group AS g ON a.group_id=g.id "
+			+ "LEFT JOIN survey.connect_group_participant AS c ON g.id=c.group_id AND c.participant_id=av.participant_id "
+			+ "LEFT JOIN survey.participant AS p ON c.participant_id=p.id WHERE g.id= ? and p.id= ?";
+
+	private final String SQL_FOR_SETTING_PARTICIPANT = "INSERT INTO survey.participant "
+			+ "(survey.participant.first_name,survey.participant.last_name, survey.participant.email, survey.participant.password) VALUES (?,?,?,?)";
+
+	private final String SQL_FOR_UPDATING_PARTICIPANT = "UPDATE survey.participant AS p SET p.first_name= ?, p.last_name= ?, p.email = ?, p.password= ? WHERE p.email= ?";
+
+	private final String SQL_FOR_DELETING_PARTICIPANT = "DELETE p, c, av, a "
+			+ "FROM survey.participant AS p, survey.connect_group_participant AS c, survey.attribute_values AS av, survey.answers AS a "
+			+ "WHERE p.id=c.participant_id AND p.id=av.participant_id  AND p.id=a.participant_id AND p.id= ?";
+
+	private final String SQL_FOR_GETTING_PARTICIPANT_BY_ID = "SELECT * FROM survey.participant WHERE survey.participant.id= ?";
 
 	@Override
 	public List<Participant> getParticipantsByGroup(Integer groupId) {
@@ -60,6 +65,7 @@ public class ParticipantDao implements IParticipant {
 
 	@Override
 	public Participant getParticipantById(Integer participantId) {
-		return (Participant) jdbcTemplate.query(SQL_FOR_GETTING_PARTICIPANT_BY_ID, new BeanPropertyRowMapper<>(Participant.class) ,participantId);
+		return (Participant) jdbcTemplate.query(SQL_FOR_GETTING_PARTICIPANT_BY_ID,
+				new BeanPropertyRowMapper<>(Participant.class), participantId);
 	}
 }

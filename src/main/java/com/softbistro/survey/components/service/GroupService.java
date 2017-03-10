@@ -26,8 +26,8 @@ public class GroupService {
 		return iGroup.getGroupsByClient(clientId);
 	}
 
-	public Integer updateGroupById(String groupName, Integer groupId) {
-		return iGroup.updateGroupById(groupName, groupId);
+	public Integer updateGroupById(Integer groupId, String groupName) {
+		return iGroup.updateGroupById(groupId, groupName);
 	}
 
 	public Integer deleteGroupById(Integer groupId) {

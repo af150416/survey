@@ -40,8 +40,8 @@ public class GroupDao implements IGroup {
 	}
 
 	@Override
-	public Integer updateGroupById(String groupName, Integer groupId) {
-		return jdbcTemplate.update(SQL_FOR_UPDATING_GROUP_BY_ID, groupName, groupId);
+	public Integer updateGroupById(Integer groupId, String groupName) {
+		return jdbcTemplate.update(SQL_FOR_UPDATING_GROUP_BY_ID, groupId, groupName);
 	}
 
 	@Override
