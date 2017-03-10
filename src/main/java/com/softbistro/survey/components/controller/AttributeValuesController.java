@@ -18,8 +18,8 @@ public class AttributeValuesController {
 	AttributeValuesService attributeValuesService;
 
 	@RequestMapping(value = "/set", method = RequestMethod.PUT)
-	public Integer setAttributeValues(@RequestBody Integer attributeId, Integer participantId, String attributeValue) {
-		return attributeValuesService.setAttributeValues(attributeId, participantId, attributeValue);
+	public Integer setAttributeValues(@RequestBody AttributeValues attributeValues) {
+		return attributeValuesService.setAttributeValues(attributeValues);
 	}
 
 	@RequestMapping(value = "/get/{attributeValuesId}", method = RequestMethod.GET)
@@ -28,8 +28,8 @@ public class AttributeValuesController {
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	public Integer updateAttributeValuesById(@RequestBody Integer attributeValuesId, String attributeValue) {
-		return attributeValuesService.updateAttributeValuesById(attributeValuesId, attributeValue);
+	public Integer updateAttributeValuesById(@RequestBody AttributeValues attributeValues) {
+		return attributeValuesService.updateAttributeValuesById(attributeValues);
 	}
 
 	@RequestMapping(value = "/delete/{attributeValuesId}", method = RequestMethod.DELETE)

@@ -14,8 +14,8 @@ public class GroupService {
 	@Autowired
 	IGroup iGroup;
 
-	public Integer setGroup(Integer clientId, String groupName) {
-		return iGroup.setGroup(clientId, groupName);
+	public Integer setGroup(Group group) {
+		return iGroup.setGroup(group);
 	}
 
 	public Group getGroupByid(Integer groupId) {
@@ -26,8 +26,8 @@ public class GroupService {
 		return iGroup.getGroupsByClient(clientId);
 	}
 
-	public Integer updateGroupById(Integer groupId, String groupName) {
-		return iGroup.updateGroupById(groupId, groupName);
+	public Integer updateGroupById(Group group) {
+		return iGroup.updateGroupById(group);
 	}
 
 	public Integer deleteGroupById(Integer groupId) {

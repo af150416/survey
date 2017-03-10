@@ -20,8 +20,8 @@ public class GroupController {
 	GroupService groupService;
 
 	@RequestMapping(value = "/set", method = RequestMethod.PUT)
-	public Integer setGroup(@RequestBody Integer clientId, String groupName) {
-		return groupService.setGroup(clientId, groupName);
+	public Integer setGroup(@RequestBody Group group) {
+		return groupService.setGroup(group);
 	}
 
 	@RequestMapping(value = "/getById/{groupId}", method = RequestMethod.GET)
@@ -33,14 +33,14 @@ public class GroupController {
 	public List<Group> getGroupByClient(@PathVariable Integer clientId) {
 		return (List<Group>) groupService.getGroupsByClient(clientId);
 	}
-	
+
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	public Integer updateGroup(@RequestBody Integer groupId, String groupName){
-		return groupService.updateGroupById(groupId, groupName);
+	public Integer updateGroup(@RequestBody Group group) {
+		return groupService.updateGroupById(group);
 	}
-	
+
 	@RequestMapping(value = "/delete/{groupId}", method = RequestMethod.DELETE)
-	public Integer deleteGroupById(@PathVariable Integer groupId ){
+	public Integer deleteGroupById(@PathVariable Integer groupId) {
 		return groupService.deleteGroupById(groupId);
 	}
 }

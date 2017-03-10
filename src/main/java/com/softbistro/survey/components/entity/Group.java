@@ -1,7 +1,10 @@
 package com.softbistro.survey.components.entity;
 
-public class Group {
+import java.io.Serializable;
 
+public class Group implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private Integer clientId;
 	private String groupName;

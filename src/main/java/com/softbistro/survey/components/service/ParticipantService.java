@@ -15,8 +15,8 @@ public class ParticipantService {
 	@Autowired
 	IParticipant iParticipant;
 
-	public Integer setParticipant(String firstName, String lastName, String email, String password){
-		return iParticipant.setParticipant(firstName, lastName, email, password);
+	public Integer setParticipant(Participant participant){
+		return iParticipant.setParticipant(participant);
 	}
 	
 	public List<Participant> getParticipantsByGroup(Integer groupId) {
@@ -27,8 +27,8 @@ public class ParticipantService {
 		return iParticipant.getParticipantAttributesInGroup(groupId, participantId);
 	}
 
-	public Integer updateParticipant(String firstName, String lastName, String email, String password){
-		return iParticipant.updateParticipant(firstName, lastName, email, password);
+	public Integer updateParticipant(Participant participant){
+		return iParticipant.updateParticipant(participant);
 	}
 	
 	public Integer deleteParticipant(Integer participantId){

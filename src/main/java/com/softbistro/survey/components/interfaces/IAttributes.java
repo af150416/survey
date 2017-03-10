@@ -6,11 +6,11 @@ import com.softbistro.survey.components.entity.Attributes;
 
 public interface IAttributes {
 
-	public Integer setAttribute(Integer group_id, String attribute);
+	public Integer setAttribute(Attributes attributes);
 
 	public Attributes getAttributeById(Integer attributesId);
 
-	public Integer updateAttributes(Integer attributeId, Integer groupId, String attribute);
+	public Integer updateAttributes(Attributes attributes);
 
 	public Integer deleteAttributes(Integer attributesId);
 

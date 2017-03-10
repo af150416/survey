@@ -4,11 +4,11 @@ import com.softbistro.survey.components.entity.AttributeValues;
 
 public interface IAttributeValues {
 
-	public Integer setAttributeValues(Integer attributeId, Integer participantId, String attributeValue);
+	public Integer setAttributeValues(AttributeValues attributeValues);
 
 	public AttributeValues getAttributeValuesById(Integer attributeValuesId);
 
-	public Integer updateAttributeValuesById(Integer attributeValuesId, String attributeValue);
+	public Integer updateAttributeValuesById(AttributeValues attributeValues);
 
 	public Integer deleteAttributeValuesById(Integer attributeValuesId);
 }

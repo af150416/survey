@@ -23,8 +23,8 @@ public class GroupDao implements IGroup {
 	private final static String SQL_FOR_DELETING_GROUP_BY_ID = "DELETE g From survey.group AS g WHERE g.id = ?";
 
 	@Override
-	public Integer setGroup(Integer clientId, String groupName) {
-		return jdbcTemplate.update(SQL_FOR_SETTING_GROUP, clientId, groupName);
+	public Integer setGroup(Group group) {
+		return jdbcTemplate.update(SQL_FOR_SETTING_GROUP, group.getClientId(), group.getGroupName());
 	}
 
 	@Override
@@ -40,8 +40,8 @@ public class GroupDao implements IGroup {
 	}
 
 	@Override
-	public Integer updateGroupById(Integer groupId, String groupName) {
-		return jdbcTemplate.update(SQL_FOR_UPDATING_GROUP_BY_ID, groupId, groupName);
+	public Integer updateGroupById(Group group) {
+		return jdbcTemplate.update(SQL_FOR_UPDATING_GROUP_BY_ID, group.getClientId(), group.getGroupName(), group.getId());
 	}
 
 	@Override

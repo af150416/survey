@@ -21,8 +21,8 @@ public class AttributeValuesDao implements IAttributeValues {
 	private final String SQL_FOR_DELETING_ATTRIBUTE_VALUES_BY_ID = "DELETE av FROM survey.attribute_values AS av WHERE av.id = ?";
 
 	@Override
-	public Integer setAttributeValues(Integer attributeId, Integer participantId, String attributeValue) {
-		return jdbcTemplate.update(SQL_FOR_SETTING_ATTRIBUTE_VALUES, attributeId, participantId, attributeValue);
+	public Integer setAttributeValues(AttributeValues attributeValues) {
+		return jdbcTemplate.update(SQL_FOR_SETTING_ATTRIBUTE_VALUES, attributeValues.getAttributeId(), attributeValues.getParticipantId(), attributeValues.getValue());
 	}
 
 	@Override
@@ -32,8 +32,8 @@ public class AttributeValuesDao implements IAttributeValues {
 	}
 
 	@Override
-	public Integer updateAttributeValuesById(Integer attributeValuesId, String attributeValue) {
-		return jdbcTemplate.update(SQL_FOR_UPDATING_ATTRIBUTE_VALUES_BY_ID, attributeValuesId, attributeValue);
+	public Integer updateAttributeValuesById(AttributeValues attributeValues) {
+		return jdbcTemplate.update(SQL_FOR_UPDATING_ATTRIBUTE_VALUES_BY_ID, attributeValues.getAttributeId(), attributeValues.getParticipantId(), attributeValues.getValue(), attributeValues.getId());
 	}
 
 	@Override

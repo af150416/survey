@@ -24,31 +24,31 @@ public class ParticipantController {
 	public List<Participant> getParticipantsByGroup(@PathVariable Integer id) {
 		return participantService.getParticipantsByGroup(id);
 	}
-	
+
 	@RequestMapping(value = "/getAttributesByGroup/{groupId}/{participantId}", method = RequestMethod.GET)
-	public List<AttributeValues> getParticipantAttributeValuesInGroup(@PathVariable Integer groupId, Integer participantId){
+	public List<AttributeValues> getParticipantAttributeValuesInGroup(@PathVariable Integer groupId,
+			Integer participantId) {
 		return participantService.getParticipantAttributesInGroup(groupId, participantId);
 	}
-	
+
 	@RequestMapping(value = "/getById/{id}", method = RequestMethod.GET)
-	public Participant getParticipantById(@PathVariable Integer participantId){
+	public Participant getParticipantById(@PathVariable Integer participantId) {
 		return participantService.getParticipantById(participantId);
 	}
-	
-	@RequestMapping(value = "/set", method = RequestMethod.PUT)
-	public Integer setParticipant(@RequestBody String firstName, String lastName, String email, String password) {
-		return participantService.setParticipant(firstName, lastName, email, password);
-	}
-	
-	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	public Integer updateParticipant(@RequestBody String firstName, String lastName, String email, String password){
-		return participantService.updateParticipant(firstName, lastName, email, password);
-	}
-	
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-	public Integer deleteParticipant(@PathVariable Integer id){
-		return participantService.deleteParticipant(id);
-		
+
+	@RequestMapping(value = "/set", method = RequestMethod.POST)
+	public Integer setParticipant(@RequestBody Participant participant) {
+		return participantService.setParticipant(participant);
 	}
 
+	@RequestMapping(value = "/update", method = RequestMethod.PUT)
+	public Integer updateParticipant(@RequestBody Participant participant) {
+		return participantService.updateParticipant(participant);
+	}
+
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+	public Integer deleteParticipant(@PathVariable Integer id) {
+		return participantService.deleteParticipant(id);
+
+	}
 }

@@ -23,8 +23,8 @@ public class AttributesDao implements IAttributes {
 	private final String SQL_FOR_GETTING_ATTRIBUTES_BY_GROUP = "SELECT * FROM survey.attributes WHERE survey.attributes.group_id = ?";
 
 	@Override
-	public Integer setAttribute(Integer group_id, String attribute) {
-		return jdbcTemplate.update(SQL_FOR_SETTING_ATTRIBUTES, group_id, attribute);
+	public Integer setAttribute(Attributes attributes) {
+		return jdbcTemplate.update(SQL_FOR_SETTING_ATTRIBUTES, attributes.getGroupId(), attributes.getAttribute());
 	}
 
 	@Override
@@ -34,8 +34,8 @@ public class AttributesDao implements IAttributes {
 	}
 
 	@Override
-	public Integer updateAttributes(Integer attributeId, Integer groupId, String attribute) {
-		return jdbcTemplate.update(SQL_FOR_UPDATING__ATTRIBUTES_BY_ID, attributeId, groupId, attribute);
+	public Integer updateAttributes(Attributes attributes) {
+		return jdbcTemplate.update(SQL_FOR_UPDATING__ATTRIBUTES_BY_ID,attributes.getGroupId(), attributes.getAttribute(), attributes.getId());
 	}
 
 	@Override

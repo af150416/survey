@@ -20,8 +20,8 @@ public class AttributesController {
 	AttributesService attributesService;
 
 	@RequestMapping(value = "/set", method = RequestMethod.PUT)
-	public Integer setAttribute(@RequestBody Integer groupId, String attribute) {
-		return attributesService.setAttribute(groupId, attribute);
+	public Integer setAttribute(@RequestBody Attributes attributes) {
+		return attributesService.setAttribute(attributes);
 	}
 
 	@RequestMapping(value = "/getById/{attributesId}", method = RequestMethod.GET)
@@ -33,14 +33,14 @@ public class AttributesController {
 	public List<Attributes> getAttributesByGroup(@PathVariable Integer groupId) {
 		return attributesService.getAttributesByGroup(groupId);
 	}
-	
+
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	public Integer updateAttributesById(@RequestBody Integer attributeId, Integer groupId, String attribute){
-		return attributesService.updateAttributes(attributeId, groupId, attribute);
+	public Integer updateAttributesById(@RequestBody Attributes attributes) {
+		return attributesService.updateAttributes(attributes);
 	}
-	
+
 	@RequestMapping(value = "/delete/{attributesId}", method = RequestMethod.DELETE)
-	public Integer deleteAttributesById(@PathVariable Integer attributesId){
+	public Integer deleteAttributesById(@PathVariable Integer attributesId) {
 		return attributesService.deleteAttributes(attributesId);
 	}
 }

@@ -14,16 +14,16 @@ public class AttributesService {
 	@Autowired
 	IAttributes iAttributes;
 
-	public Integer setAttribute(Integer group_id, String attribute) {
-		return iAttributes.setAttribute(group_id, attribute);
+	public Integer setAttribute(Attributes attributes) {
+		return iAttributes.setAttribute(attributes);
 	}
 
 	public Attributes getAttributeById(Integer attributesId) {
 		return iAttributes.getAttributeById(attributesId);
 	}
 
-	public Integer updateAttributes(Integer attributeId, Integer groupId, String attribute) {
-		return iAttributes.updateAttributes(attributeId, groupId, attribute);
+	public Integer updateAttributes(Attributes attributes) {
+		return iAttributes.updateAttributes(attributes);
 	}
 
 	public Integer deleteAttributes(Integer attributesId) {

@@ -26,9 +26,9 @@ public class ParticipantDao implements IParticipant {
 			+ "LEFT JOIN survey.participant AS p ON c.participant_id=p.id WHERE g.id= ? and p.id= ?";
 
 	private final String SQL_FOR_SETTING_PARTICIPANT = "INSERT INTO survey.participant "
-			+ "(survey.participant.first_name,survey.participant.last_name, survey.participant.email, survey.participant.password) VALUES (?,?,?,?)";
+			+ "(survey.participant.first_name, survey.participant.last_name, survey.participant.email, survey.participant.password) VALUES (?, ?, ?, ?)";
 
-	private final String SQL_FOR_UPDATING_PARTICIPANT = "UPDATE survey.participant AS p SET p.first_name= ?, p.last_name= ?, p.email = ?, p.password= ? WHERE p.email= ?";
+	private final String SQL_FOR_UPDATING_PARTICIPANT = "UPDATE survey.participant AS p SET p.first_name= ?, p.last_name= ?, p.email = ?, p.password= ? WHERE p.id= ?";
 
 	private final String SQL_FOR_DELETING_PARTICIPANT = "DELETE p, c, av, a "
 			+ "FROM survey.participant AS p, survey.connect_group_participant AS c, survey.attribute_values AS av, survey.answers AS a "
@@ -49,13 +49,13 @@ public class ParticipantDao implements IParticipant {
 	}
 
 	@Override
-	public Integer setParticipant(String firstName, String lastName, String email, String password) {
-		return jdbcTemplate.update(SQL_FOR_SETTING_PARTICIPANT, firstName, lastName, email, password);
+	public Integer setParticipant(Participant participant) {
+		return jdbcTemplate.update(SQL_FOR_SETTING_PARTICIPANT, participant.getFirstName(), participant.getLastName(), participant.geteMail(), participant.getPassword());
 	}
 
 	@Override
-	public Integer updateParticipant(String firstName, String lastName, String email, String password) {
-		return jdbcTemplate.update(SQL_FOR_UPDATING_PARTICIPANT, firstName, lastName, email, password, email);
+	public Integer updateParticipant(Participant participant) {
+		return jdbcTemplate.update(SQL_FOR_UPDATING_PARTICIPANT, participant.getFirstName(), participant.getLastName(), participant.geteMail(), participant.getPassword(), participant.getId());
 	}
 
 	@Override

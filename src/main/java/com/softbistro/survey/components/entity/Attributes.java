@@ -1,6 +1,10 @@
 package com.softbistro.survey.components.entity;
 
-public class Attributes {
+import java.io.Serializable;
+
+public class Attributes implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private Integer groupId;
 	private String attribute;

@@ -1,9 +1,11 @@
 package com.softbistro.survey.components.entity;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Participant {
+public class Participant implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String firstName;
 	private String lastName;

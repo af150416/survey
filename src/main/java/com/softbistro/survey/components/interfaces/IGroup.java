@@ -6,13 +6,13 @@ import com.softbistro.survey.components.entity.Group;
 
 public interface IGroup {
 
-	public Integer setGroup(Integer clientId, String groupName);
+	public Integer setGroup(Group group);
 
 	public Group getGroupByid(Integer groupId);
 
 	public List<Group> getGroupsByClient(Integer clientId);
 
-	public Integer updateGroupById(Integer groupId, String groupName);
+	public Integer updateGroupById(Group group);
 
 	public Integer deleteGroupById(Integer groupId);
 }
