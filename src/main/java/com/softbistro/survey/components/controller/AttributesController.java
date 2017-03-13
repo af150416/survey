@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.softbistro.survey.components.entity.Attributes;
+import com.softbistro.survey.components.entity.ExecutingStatus;
 import com.softbistro.survey.components.service.AttributesService;
 
 /**
@@ -26,10 +27,10 @@ public class AttributesController {
 
 	/**Method for creating the attribute value
 	 * @param attributes
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
 	@RequestMapping(value = "/set", method = RequestMethod.PUT)
-	public Integer setAttribute(@RequestBody Attributes attributes) {
+	 public ExecutingStatus setAttribute(@RequestBody Attributes attributes) {
 		return attributesService.setAttribute(attributes);
 	}
 
@@ -56,20 +57,20 @@ public class AttributesController {
 	/**
 	 * Method for updating attribute
 	 * @param attributes
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	public Integer updateAttributesById(@RequestBody Attributes attributes) {
+	 public ExecutingStatus updateAttributesById(@RequestBody Attributes attributes) {
 		return attributesService.updateAttributes(attributes);
 	}
 
 	/**
 	 * Method for deleting attributes by id
 	 * @param attributesId
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
 	@RequestMapping(value = "/delete/{attributesId}", method = RequestMethod.DELETE)
-	public Integer deleteAttributesById(@PathVariable Integer attributesId) {
+	 public ExecutingStatus deleteAttributesById(@PathVariable Integer attributesId) {
 		return attributesService.deleteAttributes(attributesId);
 	}
 }

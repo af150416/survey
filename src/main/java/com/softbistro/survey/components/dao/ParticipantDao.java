@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.softbistro.survey.components.entity.ExecutingStatus;
 import com.softbistro.survey.components.entity.Participant;
 import com.softbistro.survey.components.interfaces.IParticipant;
 
@@ -32,9 +33,13 @@ public class ParticipantDao implements IParticipant {
 
 	private final String SQL_FOR_DELETING_PARTICIPANT = "DELETE p, c, av, a FROM survey.participant AS p left join survey.connect_group_participant AS c on c.group_id=p.id "
 			+ "left join survey.attribute_values AS av on av.participant_id=p.id left join survey.answers AS a on a.participant_id=p.id "
-			+ "WHERE p.id= ?";
+			+ "WHERE p.email= ?";
 
 	private final String SQL_FOR_GETTING_PARTICIPANT_BY_ID = "SELECT * FROM survey.participant WHERE survey.participant.id= ?";
+	
+	private final String SQL_FOR_CHECKING_THE_PARTICIPANT_EXISTING_BY_EMAIL = "SELECT COUNT(id) FROM survey.participant AS p WHERE p.email= ?";
+	
+	private final String SQL_FOR_CHECKING_THE_PARTICIPANT_EXISTING_BY_ID = "SELECT COUNT(id) FROM survey.participant AS p WHERE p.id= ?";
 
 	/**
 	 * Method for getting all participant by group
@@ -49,31 +54,52 @@ public class ParticipantDao implements IParticipant {
 
 	/**Method for creating participant 
 	 * @param participant
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
 	@Override
-	public Integer setParticipant(Participant participant) {
-		return jdbcTemplate.update(SQL_FOR_SETTING_PARTICIPANT, participant.getFirstName(), participant.getLastName(), participant.geteMail(), participant.getPassword());
+	 public ExecutingStatus setParticipant(Participant participant) {
+		if(jdbcTemplate.update(SQL_FOR_CHECKING_THE_PARTICIPANT_EXISTING_BY_EMAIL, participant.geteMail())>0){
+			return ExecutingStatus.ALREADY_EXIST;
+		}
+		int status = jdbcTemplate.update(SQL_FOR_SETTING_PARTICIPANT, participant.getFirstName(), participant.getLastName(), participant.geteMail(), participant.getPassword());		
+		if (status==1){
+		return ExecutingStatus.SUCCEEDED;
+		}
+		return ExecutingStatus.FAILED;
 	}
 
 	/**
 	 * Method for updating participant
 	 * @param participant
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
 	@Override
-	public Integer updateParticipant(Participant participant) {
-		return jdbcTemplate.update(SQL_FOR_UPDATING_PARTICIPANT, participant.getFirstName(), participant.getLastName(), participant.geteMail(), participant.getPassword(), participant.getId());
+	 public ExecutingStatus updateParticipant(Participant participant) {
+		if(jdbcTemplate.update(SQL_FOR_CHECKING_THE_PARTICIPANT_EXISTING_BY_EMAIL, participant.geteMail())==0){
+			return ExecutingStatus.NOT_EXIST;
+		}
+		int status = jdbcTemplate.update(SQL_FOR_UPDATING_PARTICIPANT, participant.getFirstName(), participant.getLastName(), participant.geteMail(), participant.getPassword(), participant.getId());
+		if (status==1){
+		return ExecutingStatus.SUCCEEDED;
+		}
+		return ExecutingStatus.FAILED;
 	}
 
 	/**
-	 * Method for deleting participant from db by id
-	 * @param id
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * Method for deleting participant from db by email
+	 * @param email
+	 * @return ExecutingStatus
 	 */
 	@Override
-	public Integer deleteParticipant(Integer participantId) {
-		return jdbcTemplate.update(SQL_FOR_DELETING_PARTICIPANT, participantId);
+	 public ExecutingStatus deleteParticipant(String email) {
+		if(jdbcTemplate.update(SQL_FOR_CHECKING_THE_PARTICIPANT_EXISTING_BY_EMAIL,email)==0){
+			return ExecutingStatus.NOT_EXIST;
+		}
+		int status = jdbcTemplate.update(SQL_FOR_DELETING_PARTICIPANT, email);
+		if (status==1){
+		return ExecutingStatus.SUCCEEDED;
+		}
+		return ExecutingStatus.FAILED;
 	}
 
 	/**
@@ -83,6 +109,9 @@ public class ParticipantDao implements IParticipant {
 	 */
 	@Override
 	public Participant getParticipantById(Integer participantId) {
+		if(jdbcTemplate.update(SQL_FOR_CHECKING_THE_PARTICIPANT_EXISTING_BY_ID, participantId)==0){
+			return new Participant();
+		}
 		return (Participant) jdbcTemplate.queryForObject(SQL_FOR_GETTING_PARTICIPANT_BY_ID,
 				new BeanPropertyRowMapper<>(Participant.class), participantId);
 	}

@@ -3,6 +3,7 @@ package com.softbistro.survey.components.interfaces;
 import java.util.List;
 
 import com.softbistro.survey.components.entity.Attributes;
+import com.softbistro.survey.components.entity.ExecutingStatus;
 
 
 /**
@@ -14,9 +15,9 @@ public interface IAttributes {
 
 	/**Method for creating the attribute value
 	 * @param attributes
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
-	public Integer setAttribute(Attributes attributes);
+	 public ExecutingStatus setAttribute(Attributes attributes);
 
 	/**
 	 * Method for getting attribute by id
@@ -28,16 +29,16 @@ public interface IAttributes {
 	/**
 	 * Method for updating attribute
 	 * @param attributes
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
-	public Integer updateAttributes(Attributes attributes);
+	 public ExecutingStatus updateAttributes(Attributes attributes);
 
 	/**
 	 * Method for deleting attributes by id
 	 * @param attributesId
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
-	public Integer deleteAttributes(Integer attributesId);
+	 public ExecutingStatus deleteAttributes(Integer attributesId);
 
 	/**
 	 * Method to getting all attributes in group

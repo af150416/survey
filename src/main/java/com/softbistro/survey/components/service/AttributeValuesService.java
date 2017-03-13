@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.softbistro.survey.components.entity.AttributeValues;
+import com.softbistro.survey.components.entity.ExecutingStatus;
 import com.softbistro.survey.components.interfaces.IAttributeValues;
 
 /**
@@ -22,9 +23,9 @@ public class AttributeValuesService {
 	/**
 	 * Method for creating attribute values
 	 * @param attributeValues
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
-	public Integer setAttributeValues(AttributeValues attributeValues) {
+	 public ExecutingStatus setAttributeValues(AttributeValues attributeValues) {
 		return iAttributeValues.setAttributeValues(attributeValues);
 	}
 	/**
@@ -39,17 +40,17 @@ public class AttributeValuesService {
 	/**
 	 * Method for updating attribute values 
 	 * @param attributeValues
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
-	public Integer updateAttributeValuesById(AttributeValues attributeValues) {
+	 public ExecutingStatus updateAttributeValuesById(AttributeValues attributeValues) {
 		return iAttributeValues.updateAttributeValuesById(attributeValues);
 	}
 	/**
 	 * Method for deleting attribute values by id
 	 * @param attributeValuesId
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
-	public Integer deleteAttributeValuesById(Integer attributeValuesId) {
+	 public ExecutingStatus deleteAttributeValuesById(Integer attributeValuesId) {
 		return iAttributeValues.deleteAttributeValuesById(attributeValuesId);
 	}
 	

@@ -7,7 +7,9 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.softbistro.survey.components.entity.ExecutingStatus;
 import com.softbistro.survey.components.entity.Group;
+import com.softbistro.survey.components.entity.Participant;
 import com.softbistro.survey.components.interfaces.IGroup;
 
 /**
@@ -28,15 +30,20 @@ public class GroupDao implements IGroup {
 	private final static String SQL_FOR_DELETING_GROUP_BY_ID = "DELETE g, cp, cs, at, av From survey.group AS g LEFT JOIN survey.connect_group_participant AS cp ON cp.group_id=g.id "
 			+ "LEFT JOIN survey.connect_group_survey AS cs ON cs.group_id=g.id LEFT JOIN survey.attributes AS at ON at.group_id=g.id "
 			+ "LEFT JOIN survey.attribute_values AS av ON av.attribute_id=at.id WHERE g.id = ?";
+	private final static String SQL_FOR_ADDING_PARTICIPANT_IN_GROUP = "INSERT INTO survey.connect_group_participant (survey.connect_group_participant.group_id, survey.connect_group_participant.participant_id) VALUES (?, ?)";
 
 	/**
 	 * Method to create group
 	 * @param group
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
 	@Override
-	public Integer setGroup(Group group) {
-		return jdbcTemplate.update(SQL_FOR_SETTING_GROUP, group.getClientId(), group.getGroupName());
+	 public ExecutingStatus setGroup(Group group) {
+		int status = jdbcTemplate.update(SQL_FOR_SETTING_GROUP, group.getClientId(), group.getGroupName());
+		if (status==1){
+		return ExecutingStatus.SUCCEEDED;
+		}
+		return ExecutingStatus.FAILED;
 	}
 	
 	/**
@@ -64,20 +71,43 @@ public class GroupDao implements IGroup {
 	/**
 	 * Method to update group
 	 * @param group
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
 	@Override
-	public Integer updateGroupById(Group group) {
-		return jdbcTemplate.update(SQL_FOR_UPDATING_GROUP_BY_ID, group.getClientId(), group.getGroupName(), group.getId());
+	 public ExecutingStatus updateGroupById(Group group) {
+		int status = jdbcTemplate.update(SQL_FOR_UPDATING_GROUP_BY_ID, group.getClientId(), group.getGroupName(), group.getId());
+		if (status==1){
+		return ExecutingStatus.SUCCEEDED;
+		}
+		return ExecutingStatus.FAILED;
 	}
 
 	/**
 	 * Method for deleting group by id
 	 * @param groupId
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
 	@Override
-	public Integer deleteGroupById(Integer groupId) {
-		return jdbcTemplate.update(SQL_FOR_DELETING_GROUP_BY_ID, groupId);
+	 public ExecutingStatus deleteGroupById(Integer groupId) {
+		int status = jdbcTemplate.update(SQL_FOR_DELETING_GROUP_BY_ID, groupId);
+		if (status==1){
+		return ExecutingStatus.SUCCEEDED;
+		}
+		return ExecutingStatus.FAILED;
+	}
+
+	/**
+	 * Method for adding participant in group
+	 * @param groupId
+	 * @param participantId
+	 * @return ExecutingStatus
+	 */
+	@Override
+	public ExecutingStatus addParticipantInGroup(Integer groupId, Participant participantId) {
+		int status = jdbcTemplate.update(SQL_FOR_ADDING_PARTICIPANT_IN_GROUP, groupId, participantId);
+		if (status==1){
+		return ExecutingStatus.SUCCEEDED;
+		}
+		return ExecutingStatus.FAILED;
 	}
 }

@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.softbistro.survey.components.entity.Attributes;
+import com.softbistro.survey.components.entity.ExecutingStatus;
 import com.softbistro.survey.components.interfaces.IAttributes;
 
 /**
@@ -26,14 +27,25 @@ public class AttributesDao implements IAttributes {
 	private final String SQL_FOR_UPDATING__ATTRIBUTES_BY_ID = "UPDATE survey.attributes AS at SET at.group_id = ?, at.attribute = ? WHERE at.id=?";
 	private final String SQL_FOR_DELETING_ATTRIBUTES = "DELETE at, av FROM survey.attributes AS at LEFT JOIN survey.attribute_values AS av ON  av.attribute_id=at.id WHERE at.id = ?";
 	private final String SQL_FOR_GETTING_ATTRIBUTES_BY_GROUP = "SELECT * FROM survey.attributes WHERE survey.attributes.group_id = ?";
+	private final String SQL_FOR_CHECKING_ATTRIBUTES_EXISTING_BY_GROUP_AND_ATTRIBUTE = "SELECT COUNT(id) FROM survey.attributes AS a WHERE a.group_id= ? AND a.attribute= ?";
+	private final String SQL_FOR_CHECKING_ATTRIBUTES_EXISTING_BY_ID = "SELECT COUNT(id) FROM survey.attributes AS a WHERE a.id= ?";
 
 	/**Method for creating the attribute value
 	 * @param attributes
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
 	@Override
-	public Integer setAttribute(Attributes attributes) {
-		return jdbcTemplate.update(SQL_FOR_SETTING_ATTRIBUTES, attributes.getGroupId(), attributes.getAttribute());
+	public ExecutingStatus setAttribute(Attributes attributes) {
+		
+		if(jdbcTemplate.update(SQL_FOR_CHECKING_ATTRIBUTES_EXISTING_BY_GROUP_AND_ATTRIBUTE, attributes.getGroupId(), attributes.getAttribute())>0){
+			return ExecutingStatus.ALREADY_EXIST;
+		}
+
+		if (jdbcTemplate.update(SQL_FOR_SETTING_ATTRIBUTES, attributes.getGroupId(), attributes.getAttribute())==1){
+		return ExecutingStatus.SUCCEEDED;
+		}
+		
+		return ExecutingStatus.FAILED;
 	}
 
 	/**
@@ -43,6 +55,9 @@ public class AttributesDao implements IAttributes {
 	 */
 	@Override
 	public Attributes getAttributeById(Integer attributesId) {
+		if (jdbcTemplate.update(SQL_FOR_CHECKING_ATTRIBUTES_EXISTING_BY_ID, attributesId)==0){
+			return new Attributes();
+		}
 		return (Attributes) jdbcTemplate.queryForObject(SQL_FOR_GETTING_ATTRIBUTES_BY_ID,
 				new BeanPropertyRowMapper<>(Attributes.class), attributesId);
 	}
@@ -50,21 +65,39 @@ public class AttributesDao implements IAttributes {
 	/**
 	 * Method for updating attribute
 	 * @param attributes
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
 	@Override
-	public Integer updateAttributes(Attributes attributes) {
-		return jdbcTemplate.update(SQL_FOR_UPDATING__ATTRIBUTES_BY_ID,attributes.getGroupId(), attributes.getAttribute(), attributes.getId());
+	public ExecutingStatus updateAttributes(Attributes attributes) {
+		
+		if(jdbcTemplate.update(SQL_FOR_CHECKING_ATTRIBUTES_EXISTING_BY_GROUP_AND_ATTRIBUTE, attributes.getGroupId(), attributes.getAttribute())==0){
+			return ExecutingStatus.NOT_EXIST;
+		}
+		
+		if (jdbcTemplate.update(SQL_FOR_UPDATING__ATTRIBUTES_BY_ID,attributes.getGroupId(), attributes.getAttribute(), attributes.getId())==1){
+		return ExecutingStatus.SUCCEEDED;
+		}
+		
+		return ExecutingStatus.FAILED;
 	}
 
 	/**
 	 * Method for deleting attributes by id
 	 * @param attributesId
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
 	@Override
-	public Integer deleteAttributes(Integer attributesId) {
-		return jdbcTemplate.update(SQL_FOR_DELETING_ATTRIBUTES, attributesId);
+	public ExecutingStatus deleteAttributes(Integer attributesId) {
+		
+		if((jdbcTemplate.update(SQL_FOR_CHECKING_ATTRIBUTES_EXISTING_BY_ID, attributesId)==0)){
+			return ExecutingStatus.NOT_EXIST;
+		}
+		
+		if (jdbcTemplate.update(SQL_FOR_DELETING_ATTRIBUTES, attributesId)==1){
+		return ExecutingStatus.SUCCEEDED;
+		}
+		
+		return ExecutingStatus.FAILED;
 	}
 
 	/**

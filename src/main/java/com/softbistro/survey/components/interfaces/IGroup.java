@@ -2,7 +2,9 @@ package com.softbistro.survey.components.interfaces;
 
 import java.util.List;
 
+import com.softbistro.survey.components.entity.ExecutingStatus;
 import com.softbistro.survey.components.entity.Group;
+import com.softbistro.survey.components.entity.Participant;
 
 /**
  * @author af150416
@@ -10,17 +12,19 @@ import com.softbistro.survey.components.entity.Group;
  */
 public interface IGroup {
 
-	public Integer setGroup(Group group);
+	 public ExecutingStatus setGroup(Group group);
 
 	/**
 	 * Method to create group
+	 * 
 	 * @param group
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
 	public Group getGroupByid(Integer groupId);
 
 	/**
 	 * Method to get all clients in group
+	 * 
 	 * @param clientId
 	 * @return List<Group>
 	 */
@@ -28,15 +32,25 @@ public interface IGroup {
 
 	/**
 	 * Method to update group
+	 * 
 	 * @param group
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
-	public Integer updateGroupById(Group group);
+	 public ExecutingStatus updateGroupById(Group group);
 
 	/**
 	 * Method for deleting group by id
+	 * 
 	 * @param groupId
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
-	public Integer deleteGroupById(Integer groupId);
+	 public ExecutingStatus deleteGroupById(Integer groupId);
+
+	/**
+	 * Method for adding participant in group
+	 * @param groupId
+	 * @param participantId
+	 * @return ExecutingStatus
+	 */
+	public ExecutingStatus addParticipantInGroup(Integer groupId, Participant participantId);
 }

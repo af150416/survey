@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.softbistro.survey.components.entity.ExecutingStatus;
 import com.softbistro.survey.components.entity.Group;
+import com.softbistro.survey.components.entity.Participant;
 import com.softbistro.survey.components.interfaces.IGroup;
 
 
@@ -23,9 +25,9 @@ public class GroupService {
 	/**
 	 * Method to create group
 	 * @param group
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
-	public Integer setGroup(Group group) {
+	 public ExecutingStatus setGroup(Group group) {
 		return iGroup.setGroup(group);
 	}
 
@@ -50,18 +52,28 @@ public class GroupService {
 	/**
 	 * Method to update group
 	 * @param group
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
-	public Integer updateGroupById(Group group) {
+	 public ExecutingStatus updateGroupById(Group group) {
 		return iGroup.updateGroupById(group);
 	}
 
 	/**
 	 * Method for deleting group by id
 	 * @param groupId
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
-	public Integer deleteGroupById(Integer groupId) {
+	 public ExecutingStatus deleteGroupById(Integer groupId) {
 		return iGroup.deleteGroupById(groupId);
 	}
+	 
+		/**
+		 * Method for adding participant in group
+		 * @param groupId
+		 * @param participantId
+		 * @return ExecutingStatus
+		 */
+		public ExecutingStatus addParticipantInGroup(Integer groupId, Participant participantId){
+			return iGroup.addParticipantInGroup(groupId, participantId);
+		}
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.softbistro.survey.components.entity.ExecutingStatus;
 import com.softbistro.survey.components.entity.Participant;
 import com.softbistro.survey.components.service.ParticipantService;
 
@@ -46,31 +47,31 @@ public class ParticipantController {
 
 	/**Method for creating participant 
 	 * @param participant
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
 	@RequestMapping(value = "/set", method = RequestMethod.POST)
-	public Integer setParticipant(@RequestBody Participant participant) {
+	 public ExecutingStatus setParticipant(@RequestBody Participant participant) {
 		return participantService.setParticipant(participant);
 	}
 
 	/**
 	 * Method for updating participant
 	 * @param participant
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	public Integer updateParticipant(@RequestBody Participant participant) {
+	 public ExecutingStatus updateParticipant(@RequestBody Participant participant) {
 		return participantService.updateParticipant(participant);
 	}
 
 	/**
-	 * Method for deleting participant from db by id
-	 * @param id
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * Method for deleting participant from db by email
+	 * @param email
+	 * @return ExecutingStatus
 	 */
 	@RequestMapping(value = "/delete/{participantId}", method = RequestMethod.DELETE)
-	public Integer deleteParticipant(@PathVariable Integer participantId) {
-		return participantService.deleteParticipant(participantId);
+	 public ExecutingStatus deleteParticipant(@PathVariable String email) {
+		return participantService.deleteParticipant(email);
 
 	}
 }

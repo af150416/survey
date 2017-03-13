@@ -2,6 +2,7 @@ package com.softbistro.survey.components.interfaces;
 
 import java.util.List;
 
+import com.softbistro.survey.components.entity.ExecutingStatus;
 import com.softbistro.survey.components.entity.Participant;
 
 
@@ -14,9 +15,9 @@ public interface IParticipant {
 
 	/**Method for creating participant 
 	 * @param participant
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
-	public Integer setParticipant(Participant participant);
+	 public ExecutingStatus setParticipant(Participant participant);
 
 	/**
 	 * Method for getting all participant by group
@@ -28,16 +29,16 @@ public interface IParticipant {
 	/**
 	 * Method for updating participant
 	 * @param participant
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
-	public Integer updateParticipant(Participant participant);
+	 public ExecutingStatus updateParticipant(Participant participant);
 	
 	/**
 	 * Method for deleting participant from db by id
-	 * @param id
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @param email
+	 * @return ExecutingStatus
 	 */
-	public Integer deleteParticipant(Integer participantId);
+	 public ExecutingStatus deleteParticipant(String email);
 
 	/**
 	 * Method to getting  participant from db by id

@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.softbistro.survey.components.entity.AttributeValues;
+import com.softbistro.survey.components.entity.ExecutingStatus;
 import com.softbistro.survey.components.interfaces.IAttributeValues;
 
 /**
@@ -34,11 +35,15 @@ public class AttributeValuesDao implements IAttributeValues {
 	/**
 	 * Method for creating attribute values
 	 * @param attributeValues
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
 	@Override
-	public Integer setAttributeValues(AttributeValues attributeValues) {
-		return jdbcTemplate.update(SQL_FOR_SETTING_ATTRIBUTE_VALUES, attributeValues.getAttributeId(), attributeValues.getParticipantId(), attributeValues.getValue());
+	public ExecutingStatus setAttributeValues(AttributeValues attributeValues) {
+		int status =  jdbcTemplate.update(SQL_FOR_SETTING_ATTRIBUTE_VALUES, attributeValues.getAttributeId(), attributeValues.getParticipantId(), attributeValues.getValue());
+		if (status==1){
+		return ExecutingStatus.SUCCEEDED;
+		}
+		return ExecutingStatus.FAILED;
 	}
 
 	/**
@@ -55,21 +60,29 @@ public class AttributeValuesDao implements IAttributeValues {
 	/**
 	 * Method for updating attribute values 
 	 * @param attributeValues
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
 	@Override
-	public Integer updateAttributeValuesById(AttributeValues attributeValues) {
-		return jdbcTemplate.update(SQL_FOR_UPDATING_ATTRIBUTE_VALUES_BY_ID, attributeValues.getAttributeId(), attributeValues.getParticipantId(), attributeValues.getValue(), attributeValues.getId());
+	public ExecutingStatus updateAttributeValuesById(AttributeValues attributeValues) {
+		int status = jdbcTemplate.update(SQL_FOR_UPDATING_ATTRIBUTE_VALUES_BY_ID, attributeValues.getAttributeId(), attributeValues.getParticipantId(), attributeValues.getValue(), attributeValues.getId());
+		if (status==1){
+		return ExecutingStatus.SUCCEEDED;
+		}
+		return ExecutingStatus.FAILED;
 	}
 
 	/**
 	 * Method for deleting attribute values by id
 	 * @param attributeValuesId
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
 	@Override
-	public Integer deleteAttributeValuesById(Integer attributeValuesId) {
-		return jdbcTemplate.update(SQL_FOR_DELETING_ATTRIBUTE_VALUES_BY_ID, attributeValuesId);
+	public ExecutingStatus deleteAttributeValuesById(Integer attributeValuesId) {
+		int status = jdbcTemplate.update(SQL_FOR_DELETING_ATTRIBUTE_VALUES_BY_ID, attributeValuesId);
+		if (status==1){
+		return ExecutingStatus.SUCCEEDED;
+		}
+		return ExecutingStatus.FAILED;
 	}
 	
 	/**

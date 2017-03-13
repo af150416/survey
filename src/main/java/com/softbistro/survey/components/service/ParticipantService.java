@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.softbistro.survey.components.entity.ExecutingStatus;
 import com.softbistro.survey.components.entity.Participant;
 import com.softbistro.survey.components.interfaces.IParticipant;
 
@@ -21,9 +22,9 @@ public class ParticipantService {
 	
 	/**Method for creating participant 
 	 * @param participant
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
-	public Integer setParticipant(Participant participant){
+	 public ExecutingStatus setParticipant(Participant participant){
 		return iParticipant.setParticipant(participant);
 	}
 	
@@ -39,19 +40,19 @@ public class ParticipantService {
 	/**
 	 * Method for updating participant
 	 * @param participant
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
-	public Integer updateParticipant(Participant participant){
+	 public ExecutingStatus updateParticipant(Participant participant){
 		return iParticipant.updateParticipant(participant);
 	}
 	
 	/**
-	 * Method for deleting participant from db by id
-	 * @param id
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * Method for deleting participant from db by email
+	 * @param email
+	 * @return ExecutingStatus
 	 */
-	public Integer deleteParticipant(Integer participantId){
-		return iParticipant.deleteParticipant(participantId);
+	 public ExecutingStatus deleteParticipant(String email){
+		return iParticipant.deleteParticipant(email);
 	}
 
 	/**

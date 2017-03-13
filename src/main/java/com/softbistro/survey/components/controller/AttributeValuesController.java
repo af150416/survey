@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.softbistro.survey.components.entity.AttributeValues;
+import com.softbistro.survey.components.entity.ExecutingStatus;
 import com.softbistro.survey.components.service.AttributeValuesService;
 
 /**
@@ -27,10 +28,10 @@ public class AttributeValuesController {
 	/**
 	 * Method for creating attribute values
 	 * @param attributeValues
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
 	@RequestMapping(value = "/set", method = RequestMethod.PUT)
-	public Integer setAttributeValues(@RequestBody AttributeValues attributeValues) {
+	 public ExecutingStatus setAttributeValues(@RequestBody AttributeValues attributeValues) {
 		return attributeValuesService.setAttributeValues(attributeValues);
 	}
 
@@ -47,20 +48,20 @@ public class AttributeValuesController {
 	/**
 	 * Method for updating attribute values 
 	 * @param attributeValues
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	public Integer updateAttributeValuesById(@RequestBody AttributeValues attributeValues) {
+	 public ExecutingStatus updateAttributeValuesById(@RequestBody AttributeValues attributeValues) {
 		return attributeValuesService.updateAttributeValuesById(attributeValues);
 	}
 
 	/**
 	 * Method for deleting attribute values by id
 	 * @param attributeValuesId
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
 	@RequestMapping(value = "/delete/{attributeValuesId}", method = RequestMethod.DELETE)
-	public Integer deleteAttributeValuesById(@PathVariable Integer attributeValuesId) {
+	 public ExecutingStatus deleteAttributeValuesById(@PathVariable Integer attributeValuesId) {
 		return attributeValuesService.deleteAttributeValuesById(attributeValuesId);
 	}
 	

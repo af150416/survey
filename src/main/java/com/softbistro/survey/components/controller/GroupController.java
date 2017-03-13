@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.softbistro.survey.components.entity.ExecutingStatus;
 import com.softbistro.survey.components.entity.Group;
+import com.softbistro.survey.components.entity.Participant;
 import com.softbistro.survey.components.service.GroupService;
 
 /**
@@ -27,10 +29,10 @@ public class GroupController {
 	/**
 	 * Method to create group
 	 * @param group
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
 	@RequestMapping(value = "/set", method = RequestMethod.PUT)
-	public Integer setGroup(@RequestBody Group group) {
+	 public ExecutingStatus setGroup(@RequestBody Group group) {
 		return groupService.setGroup(group);
 	}
 
@@ -57,20 +59,31 @@ public class GroupController {
 	/**
 	 * Method to update group
 	 * @param group
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	public Integer updateGroup(@RequestBody Group group) {
+	 public ExecutingStatus updateGroup(@RequestBody Group group) {
 		return groupService.updateGroupById(group);
 	}
 
 	/**
 	 * Method for deleting group by id
 	 * @param groupId
-	 * @return int status of method executing where (0 = Failed, 1 = Succeeded, 3 = Canceled, 5 = Unknown)
+	 * @return ExecutingStatus
 	 */
 	@RequestMapping(value = "/delete/{groupId}", method = RequestMethod.DELETE)
-	public Integer deleteGroupById(@PathVariable Integer groupId) {
+	 public ExecutingStatus deleteGroupById(@PathVariable Integer groupId) {
 		return groupService.deleteGroupById(groupId);
+	}
+	
+	/**
+	 * Method for adding participant in group
+	 * @param groupId
+	 * @param participantId
+	 * @return ExecutingStatus
+	 */
+	@RequestMapping(value = "/addParticipantInGroup/{groupId}/{participantId}", method = RequestMethod.PUT)
+	public ExecutingStatus addParticipantInGroup(@PathVariable Integer groupId, Participant participantId){
+		return groupService.addParticipantInGroup(groupId, participantId);
 	}
 }
