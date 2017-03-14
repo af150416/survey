@@ -37,7 +37,7 @@ public class AttributesDao implements IAttributes {
 	@Override
 	public ExecutingStatus setAttribute(Attributes attributes) {
 		
-		if(jdbcTemplate.update(SQL_FOR_CHECKING_ATTRIBUTES_EXISTING_BY_GROUP_AND_ATTRIBUTE, attributes.getGroupId(), attributes.getAttribute())>0){
+		if(jdbcTemplate.queryForObject(SQL_FOR_CHECKING_ATTRIBUTES_EXISTING_BY_GROUP_AND_ATTRIBUTE, Integer.class, attributes.getGroupId(), attributes.getAttribute())>0){
 			return ExecutingStatus.ALREADY_EXIST;
 		}
 
@@ -55,7 +55,7 @@ public class AttributesDao implements IAttributes {
 	 */
 	@Override
 	public Attributes getAttributeById(Integer attributesId) {
-		if (jdbcTemplate.update(SQL_FOR_CHECKING_ATTRIBUTES_EXISTING_BY_ID, attributesId)==0){
+		if (jdbcTemplate.queryForObject(SQL_FOR_CHECKING_ATTRIBUTES_EXISTING_BY_ID, Integer.class, attributesId)==0){
 			return new Attributes();
 		}
 		return (Attributes) jdbcTemplate.queryForObject(SQL_FOR_GETTING_ATTRIBUTES_BY_ID,
@@ -70,7 +70,7 @@ public class AttributesDao implements IAttributes {
 	@Override
 	public ExecutingStatus updateAttributes(Attributes attributes) {
 		
-		if(jdbcTemplate.update(SQL_FOR_CHECKING_ATTRIBUTES_EXISTING_BY_GROUP_AND_ATTRIBUTE, attributes.getGroupId(), attributes.getAttribute())==0){
+		if(jdbcTemplate.queryForObject(SQL_FOR_CHECKING_ATTRIBUTES_EXISTING_BY_GROUP_AND_ATTRIBUTE, Integer.class, attributes.getGroupId(), attributes.getAttribute())==0){
 			return ExecutingStatus.NOT_EXIST;
 		}
 		
@@ -89,7 +89,7 @@ public class AttributesDao implements IAttributes {
 	@Override
 	public ExecutingStatus deleteAttributes(Integer attributesId) {
 		
-		if((jdbcTemplate.update(SQL_FOR_CHECKING_ATTRIBUTES_EXISTING_BY_ID, attributesId)==0)){
+		if((jdbcTemplate.queryForObject(SQL_FOR_CHECKING_ATTRIBUTES_EXISTING_BY_ID, Integer.class, attributesId)==0)){
 			return ExecutingStatus.NOT_EXIST;
 		}
 		

@@ -44,7 +44,7 @@ public class ParticipantDao implements IParticipant {
 	 */
 	@Override
 	public ExecutingStatus setParticipant(Participant participant) {
-		if (jdbcTemplate.update(SQL_FOR_CHECKING_THE_PARTICIPANT_EXISTING_BY_EMAIL, participant.geteMail()) > 0) {
+		if (jdbcTemplate.queryForObject(SQL_FOR_CHECKING_THE_PARTICIPANT_EXISTING_BY_EMAIL, Integer.class, participant.geteMail()) > 0) {
 			return ExecutingStatus.ALREADY_EXIST;
 		}
 		int status = jdbcTemplate.update(SQL_FOR_SETTING_PARTICIPANT, participant.getFirstName(),
@@ -63,7 +63,7 @@ public class ParticipantDao implements IParticipant {
 	 */
 	@Override
 	public ExecutingStatus updateParticipant(Participant participant) {
-		if (jdbcTemplate.update(SQL_FOR_CHECKING_THE_PARTICIPANT_EXISTING_BY_EMAIL, participant.geteMail()) == 0) {
+		if (jdbcTemplate.queryForObject(SQL_FOR_CHECKING_THE_PARTICIPANT_EXISTING_BY_EMAIL, Integer.class, participant.geteMail()) == 0) {
 			return ExecutingStatus.NOT_EXIST;
 		}
 		int status = jdbcTemplate.update(SQL_FOR_UPDATING_PARTICIPANT, participant.getFirstName(),
@@ -82,7 +82,7 @@ public class ParticipantDao implements IParticipant {
 	 */
 	@Override
 	public ExecutingStatus deleteParticipant(String email) {
-		if (jdbcTemplate.update(SQL_FOR_CHECKING_THE_PARTICIPANT_EXISTING_BY_EMAIL, email) == 0) {
+		if (jdbcTemplate.queryForObject(SQL_FOR_CHECKING_THE_PARTICIPANT_EXISTING_BY_EMAIL, Integer.class, email) == 0) {
 			return ExecutingStatus.NOT_EXIST;
 		}
 		int status = jdbcTemplate.update(SQL_FOR_DELETING_PARTICIPANT, email);
@@ -100,7 +100,7 @@ public class ParticipantDao implements IParticipant {
 	 */
 	@Override
 	public Participant getParticipantById(Integer participantId) {
-		if (jdbcTemplate.update(SQL_FOR_CHECKING_THE_PARTICIPANT_EXISTING_BY_ID, participantId) == 0) {
+		if (jdbcTemplate.queryForObject(SQL_FOR_CHECKING_THE_PARTICIPANT_EXISTING_BY_ID, Integer.class, participantId) == 0) {
 			return new Participant();
 		}
 		return (Participant) jdbcTemplate.queryForObject(SQL_FOR_GETTING_PARTICIPANT_BY_ID,
