@@ -4,15 +4,16 @@ import java.util.List;
 
 import com.softbistro.survey.components.entity.ExecutingStatus;
 import com.softbistro.survey.components.entity.Group;
-import com.softbistro.survey.components.entity.Participant;
 
 /**
+ * Interface for Group entity
+ * 
  * @author af150416
  *
  */
 public interface IGroup {
 
-	 public ExecutingStatus setGroup(Group group);
+	public ExecutingStatus setGroup(Group group);
 
 	/**
 	 * Method to create group
@@ -36,7 +37,7 @@ public interface IGroup {
 	 * @param group
 	 * @return ExecutingStatus
 	 */
-	 public ExecutingStatus updateGroupById(Group group);
+	public ExecutingStatus updateGroupById(Group group);
 
 	/**
 	 * Method for deleting group by id
@@ -44,13 +45,5 @@ public interface IGroup {
 	 * @param groupId
 	 * @return ExecutingStatus
 	 */
-	 public ExecutingStatus deleteGroupById(Integer groupId);
-
-	/**
-	 * Method for adding participant in group
-	 * @param groupId
-	 * @param participantId
-	 * @return ExecutingStatus
-	 */
-	public ExecutingStatus addParticipantInGroup(Integer groupId, Participant participantId);
+	public ExecutingStatus deleteGroupById(Integer groupId);
 }

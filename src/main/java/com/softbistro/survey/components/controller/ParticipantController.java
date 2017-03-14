@@ -1,7 +1,5 @@
 package com.softbistro.survey.components.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +13,7 @@ import com.softbistro.survey.components.service.ParticipantService;
 
 /**
  * Controller for participant entity
+ * 
  * @author af150416
  *
  */
@@ -26,17 +25,8 @@ public class ParticipantController {
 	ParticipantService participantService;
 
 	/**
-	 * Method for getting all participant by group
-	 * @param groupId
-	 * @return List<Participant>
-	 */
-	@RequestMapping(value = "/getByGroup/{groupId}", method = RequestMethod.GET)
-	public List<Participant> getParticipantsByGroup(@PathVariable Integer groupId) {
-		return participantService.getParticipantsByGroup(groupId);
-	}
-
-	/**
-	 * Method to getting  participant from db by id
+	 * Method to getting participant from db by id
+	 * 
 	 * @param participantId
 	 * @return Participant
 	 */
@@ -45,32 +35,36 @@ public class ParticipantController {
 		return participantService.getParticipantById(participantId);
 	}
 
-	/**Method for creating participant 
+	/**
+	 * Method for creating participant
+	 * 
 	 * @param participant
 	 * @return ExecutingStatus
 	 */
 	@RequestMapping(value = "/set", method = RequestMethod.POST)
-	 public ExecutingStatus setParticipant(@RequestBody Participant participant) {
+	public ExecutingStatus setParticipant(@RequestBody Participant participant) {
 		return participantService.setParticipant(participant);
 	}
 
 	/**
 	 * Method for updating participant
+	 * 
 	 * @param participant
 	 * @return ExecutingStatus
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	 public ExecutingStatus updateParticipant(@RequestBody Participant participant) {
+	public ExecutingStatus updateParticipant(@RequestBody Participant participant) {
 		return participantService.updateParticipant(participant);
 	}
 
 	/**
 	 * Method for deleting participant from db by email
+	 * 
 	 * @param email
 	 * @return ExecutingStatus
 	 */
 	@RequestMapping(value = "/delete/{participantId}", method = RequestMethod.DELETE)
-	 public ExecutingStatus deleteParticipant(@PathVariable String email) {
+	public ExecutingStatus deleteParticipant(@PathVariable String email) {
 		return participantService.deleteParticipant(email);
 
 	}

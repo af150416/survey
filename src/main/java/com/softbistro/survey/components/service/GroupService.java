@@ -7,12 +7,11 @@ import org.springframework.stereotype.Service;
 
 import com.softbistro.survey.components.entity.ExecutingStatus;
 import com.softbistro.survey.components.entity.Group;
-import com.softbistro.survey.components.entity.Participant;
 import com.softbistro.survey.components.interfaces.IGroup;
-
 
 /**
  * Service for group entity
+ * 
  * @author af150416
  *
  */
@@ -24,15 +23,17 @@ public class GroupService {
 
 	/**
 	 * Method to create group
+	 * 
 	 * @param group
 	 * @return ExecutingStatus
 	 */
-	 public ExecutingStatus setGroup(Group group) {
+	public ExecutingStatus setGroup(Group group) {
 		return iGroup.setGroup(group);
 	}
 
 	/**
 	 * Method to get group from db
+	 * 
 	 * @param groupId
 	 * @return Group
 	 */
@@ -42,6 +43,7 @@ public class GroupService {
 
 	/**
 	 * Method to get all clients in group
+	 * 
 	 * @param clientId
 	 * @return List<Group>
 	 */
@@ -51,29 +53,21 @@ public class GroupService {
 
 	/**
 	 * Method to update group
+	 * 
 	 * @param group
 	 * @return ExecutingStatus
 	 */
-	 public ExecutingStatus updateGroupById(Group group) {
+	public ExecutingStatus updateGroupById(Group group) {
 		return iGroup.updateGroupById(group);
 	}
 
 	/**
 	 * Method for deleting group by id
+	 * 
 	 * @param groupId
 	 * @return ExecutingStatus
 	 */
-	 public ExecutingStatus deleteGroupById(Integer groupId) {
+	public ExecutingStatus deleteGroupById(Integer groupId) {
 		return iGroup.deleteGroupById(groupId);
 	}
-	 
-		/**
-		 * Method for adding participant in group
-		 * @param groupId
-		 * @param participantId
-		 * @return ExecutingStatus
-		 */
-		public ExecutingStatus addParticipantInGroup(Integer groupId, Participant participantId){
-			return iGroup.addParticipantInGroup(groupId, participantId);
-		}
 }

@@ -9,11 +9,11 @@ import org.springframework.stereotype.Repository;
 
 import com.softbistro.survey.components.entity.ExecutingStatus;
 import com.softbistro.survey.components.entity.Group;
-import com.softbistro.survey.components.entity.Participant;
 import com.softbistro.survey.components.interfaces.IGroup;
 
 /**
  * Data access object for group entity
+ * 
  * @author af150416
  *
  */
@@ -30,35 +30,45 @@ public class GroupDao implements IGroup {
 	private final static String SQL_FOR_DELETING_GROUP_BY_ID = "DELETE g, cp, cs, at, av From survey.group AS g LEFT JOIN survey.connect_group_participant AS cp ON cp.group_id=g.id "
 			+ "LEFT JOIN survey.connect_group_survey AS cs ON cs.group_id=g.id LEFT JOIN survey.attributes AS at ON at.group_id=g.id "
 			+ "LEFT JOIN survey.attribute_values AS av ON av.attribute_id=at.id WHERE g.id = ?";
-	private final static String SQL_FOR_ADDING_PARTICIPANT_IN_GROUP = "INSERT INTO survey.connect_group_participant (survey.connect_group_participant.group_id, survey.connect_group_participant.participant_id) VALUES (?, ?)";
+	private final static String SQL_FOR_CHECKING_GROUP_EXISTING_BY_ID = "SELECT COUNT(*) FROM survey.group AS g WHERE g.id = ?";
+	private final static String SQL_FOR_CHECKING_GROUP_EXISTING_BY_CLIENT_ID_AND_GROUP_NAME = "SELECT COUNT(*) FROM survey.group AS g WHERE g.client_id = ? AND g.group_name = ?";
 
 	/**
 	 * Method to create group
+	 * 
 	 * @param group
 	 * @return ExecutingStatus
 	 */
 	@Override
-	 public ExecutingStatus setGroup(Group group) {
-		int status = jdbcTemplate.update(SQL_FOR_SETTING_GROUP, group.getClientId(), group.getGroupName());
-		if (status==1){
-		return ExecutingStatus.SUCCEEDED;
+	public ExecutingStatus setGroup(Group group) {
+		if ((jdbcTemplate.queryForObject(SQL_FOR_CHECKING_GROUP_EXISTING_BY_CLIENT_ID_AND_GROUP_NAME, Integer.class,
+				group.getClientId(), group.getGroupName())) > 0) {
+			return ExecutingStatus.ALREADY_EXIST;
+		}
+		if (jdbcTemplate.update(SQL_FOR_SETTING_GROUP, group.getClientId(), group.getGroupName()) == 1) {
+			return ExecutingStatus.SUCCEEDED;
 		}
 		return ExecutingStatus.FAILED;
 	}
-	
+
 	/**
 	 * Method to get group from db
+	 * 
 	 * @param groupId
 	 * @return Group
 	 */
 	@Override
 	public Group getGroupByid(Integer groupId) {
-		return (Group) jdbcTemplate.queryForObject(SQL_FOR_GETTING_GROUP_BY_ID, new BeanPropertyRowMapper<>(Group.class),
-				groupId);
+		if ((jdbcTemplate.update(SQL_FOR_CHECKING_GROUP_EXISTING_BY_ID, groupId)) == 0) {
+			return new Group();
+		}
+		return (Group) jdbcTemplate.queryForObject(SQL_FOR_GETTING_GROUP_BY_ID,
+				new BeanPropertyRowMapper<>(Group.class), groupId);
 	}
 
 	/**
 	 * Method to get all clients in group
+	 * 
 	 * @param clientId
 	 * @return List<Group>
 	 */
@@ -70,43 +80,34 @@ public class GroupDao implements IGroup {
 
 	/**
 	 * Method to update group
+	 * 
 	 * @param group
 	 * @return ExecutingStatus
 	 */
 	@Override
-	 public ExecutingStatus updateGroupById(Group group) {
-		int status = jdbcTemplate.update(SQL_FOR_UPDATING_GROUP_BY_ID, group.getClientId(), group.getGroupName(), group.getId());
-		if (status==1){
-		return ExecutingStatus.SUCCEEDED;
+	public ExecutingStatus updateGroupById(Group group) {
+		if ((jdbcTemplate.queryForObject(SQL_FOR_CHECKING_GROUP_EXISTING_BY_ID, Integer.class, group.getId())) == 0) {
+			return ExecutingStatus.NOT_EXIST;
+		}
+		if (jdbcTemplate.update(SQL_FOR_UPDATING_GROUP_BY_ID, group.getGroupName(), group.getId()) == 1) {
+			return ExecutingStatus.SUCCEEDED;
 		}
 		return ExecutingStatus.FAILED;
 	}
 
 	/**
 	 * Method for deleting group by id
+	 * 
 	 * @param groupId
 	 * @return ExecutingStatus
 	 */
 	@Override
-	 public ExecutingStatus deleteGroupById(Integer groupId) {
-		int status = jdbcTemplate.update(SQL_FOR_DELETING_GROUP_BY_ID, groupId);
-		if (status==1){
-		return ExecutingStatus.SUCCEEDED;
+	public ExecutingStatus deleteGroupById(Integer groupId) {
+		if ((jdbcTemplate.queryForObject(SQL_FOR_CHECKING_GROUP_EXISTING_BY_ID, Integer.class, groupId)) == 0) {
+			return ExecutingStatus.NOT_EXIST;
 		}
-		return ExecutingStatus.FAILED;
-	}
-
-	/**
-	 * Method for adding participant in group
-	 * @param groupId
-	 * @param participantId
-	 * @return ExecutingStatus
-	 */
-	@Override
-	public ExecutingStatus addParticipantInGroup(Integer groupId, Participant participantId) {
-		int status = jdbcTemplate.update(SQL_FOR_ADDING_PARTICIPANT_IN_GROUP, groupId, participantId);
-		if (status==1){
-		return ExecutingStatus.SUCCEEDED;
+		if (jdbcTemplate.update(SQL_FOR_DELETING_GROUP_BY_ID, groupId) == 1) {
+			return ExecutingStatus.SUCCEEDED;
 		}
 		return ExecutingStatus.FAILED;
 	}
