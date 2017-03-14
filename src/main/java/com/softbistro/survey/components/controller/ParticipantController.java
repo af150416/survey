@@ -64,8 +64,7 @@ public class ParticipantController {
 	 * @return ExecutingStatus
 	 */
 	@RequestMapping(value = "/delete/{participantId}", method = RequestMethod.DELETE)
-	public ExecutingStatus deleteParticipant(@PathVariable String email) {
-		return participantService.deleteParticipant(email);
-
+	public ExecutingStatus deleteParticipant(@PathVariable Integer participantId) {
+		return participantService.deleteParticipant(participantId);
 	}
 }

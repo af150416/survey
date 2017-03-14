@@ -40,13 +40,13 @@ public class ParticipantService {
 	}
 
 	/**
-	 * Method for deleting participant from db by email
+	 * Method for deleting participant from db by id
 	 * 
-	 * @param email
+	 * @param participantId
 	 * @return ExecutingStatus
 	 */
-	public ExecutingStatus deleteParticipant(String email) {
-		return iParticipant.deleteParticipant(email);
+	public ExecutingStatus deleteParticipant(Integer participantId) {
+		return iParticipant.deleteParticipant(participantId);
 	}
 
 	/**

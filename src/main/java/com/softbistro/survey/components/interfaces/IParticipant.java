@@ -30,10 +30,10 @@ public interface IParticipant {
 	/**
 	 * Method for deleting participant from db by id
 	 * 
-	 * @param email
+	 * @param participantId
 	 * @return ExecutingStatus
 	 */
-	public ExecutingStatus deleteParticipant(String email);
+	public ExecutingStatus deleteParticipant(Integer participantId);
 
 	/**
 	 * Method to getting participant from db by id
