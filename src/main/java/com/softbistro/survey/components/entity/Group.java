@@ -3,44 +3,43 @@ package com.softbistro.survey.components.entity;
 import java.io.Serializable;
 import java.sql.Date;
 
-
 /**
  * Class that represent group entity
+ * 
  * @author af150416
  *
  */
 public class Group implements Serializable {
 
 	/**
-	 *standard value for serialization 
+	 * standard value for serialization
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * group id
 	 */
 	private Integer id;
-	
+
 	/**
 	 * client id
 	 */
 	private Integer clientId;
-	
+
 	/**
 	 * group name
 	 */
 	private String groupName;
-		
+
 	/**
 	 * group created date
 	 */
 	private Date createdDate;
-	
+
 	/**
 	 * group modified date
 	 */
 	private Date modifiedDate;
-
 
 	public Integer getId() {
 		return id;

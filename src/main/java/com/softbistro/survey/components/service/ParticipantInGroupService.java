@@ -3,6 +3,7 @@ package com.softbistro.survey.components.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.softbistro.survey.components.entity.ExecutingStatus;
 import com.softbistro.survey.components.entity.Group;
@@ -16,6 +17,7 @@ import com.softbistro.survey.components.interfaces.IParticipantInGroup;
  * @author af150416
  *
  */
+@Service
 public class ParticipantInGroupService {
 
 	@Autowired

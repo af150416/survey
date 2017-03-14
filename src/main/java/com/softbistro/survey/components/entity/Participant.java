@@ -3,9 +3,9 @@ package com.softbistro.survey.components.entity;
 import java.io.Serializable;
 import java.sql.Date;
 
-
 /**
  * Class that represent participant entity
+ * 
  * @author af150416
  *
  */
@@ -15,37 +15,37 @@ public class Participant implements Serializable {
 	 * standard value for serialization
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * participant id
 	 */
 	private Integer id;
-	
+
 	/**
 	 * participant first name
 	 */
 	private String firstName;
-	
+
 	/**
 	 * participant last name
 	 */
 	private String lastName;
-	
+
 	/**
 	 * participant e-mail
 	 */
 	private String eMail;
-	
+
 	/**
 	 * participant password
 	 */
 	private String password;
-	
+
 	/**
 	 * participant created date
 	 */
 	private Date createdDate;
-	
+
 	/**
 	 * participant modified date
 	 */

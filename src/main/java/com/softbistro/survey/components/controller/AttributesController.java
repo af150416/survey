@@ -15,6 +15,7 @@ import com.softbistro.survey.components.service.AttributesService;
 
 /**
  * Controller
+ * 
  * @author af150416
  *
  */
@@ -25,17 +26,20 @@ public class AttributesController {
 	@Autowired
 	AttributesService attributesService;
 
-	/**Method for creating the attribute value
+	/**
+	 * Method for creating the attribute value
+	 * 
 	 * @param attributes
 	 * @return ExecutingStatus
 	 */
 	@RequestMapping(value = "/set", method = RequestMethod.PUT)
-	 public ExecutingStatus setAttribute(@RequestBody Attributes attributes) {
+	public ExecutingStatus setAttribute(@RequestBody Attributes attributes) {
 		return attributesService.setAttribute(attributes);
 	}
 
 	/**
 	 * Method for getting attribute by id
+	 * 
 	 * @param attributesId
 	 * @return Attributes
 	 */
@@ -46,6 +50,7 @@ public class AttributesController {
 
 	/**
 	 * Method to getting all attributes on group
+	 * 
 	 * @param groupId
 	 * @return List<Attributes>
 	 */
@@ -56,21 +61,23 @@ public class AttributesController {
 
 	/**
 	 * Method for updating attribute
+	 * 
 	 * @param attributes
 	 * @return ExecutingStatus
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	 public ExecutingStatus updateAttributesById(@RequestBody Attributes attributes) {
+	public ExecutingStatus updateAttributesById(@RequestBody Attributes attributes) {
 		return attributesService.updateAttributes(attributes);
 	}
 
 	/**
 	 * Method for deleting attributes by id
+	 * 
 	 * @param attributesId
 	 * @return ExecutingStatus
 	 */
 	@RequestMapping(value = "/delete/{attributesId}", method = RequestMethod.DELETE)
-	 public ExecutingStatus deleteAttributesById(@PathVariable Integer attributesId) {
+	public ExecutingStatus deleteAttributesById(@PathVariable Integer attributesId) {
 		return attributesService.deleteAttributes(attributesId);
 	}
 }

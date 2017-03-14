@@ -15,6 +15,7 @@ import com.softbistro.survey.components.service.AttributeValuesService;
 
 /**
  * Controller for attribute values entity
+ * 
  * @author af150416
  *
  */
@@ -27,16 +28,18 @@ public class AttributeValuesController {
 
 	/**
 	 * Method for creating attribute values
+	 * 
 	 * @param attributeValues
 	 * @return ExecutingStatus
 	 */
 	@RequestMapping(value = "/set", method = RequestMethod.PUT)
-	 public ExecutingStatus setAttributeValues(@RequestBody AttributeValues attributeValues) {
+	public ExecutingStatus setAttributeValues(@RequestBody AttributeValues attributeValues) {
 		return attributeValuesService.setAttributeValues(attributeValues);
 	}
 
 	/**
 	 * Method for getting attribute values form the db
+	 * 
 	 * @param attributeValuesId
 	 * @return AttributeValues
 	 */
@@ -46,27 +49,30 @@ public class AttributeValuesController {
 	}
 
 	/**
-	 * Method for updating attribute values 
+	 * Method for updating attribute values
+	 * 
 	 * @param attributeValues
 	 * @return ExecutingStatus
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	 public ExecutingStatus updateAttributeValuesById(@RequestBody AttributeValues attributeValues) {
+	public ExecutingStatus updateAttributeValuesById(@RequestBody AttributeValues attributeValues) {
 		return attributeValuesService.updateAttributeValuesById(attributeValues);
 	}
 
 	/**
 	 * Method for deleting attribute values by id
+	 * 
 	 * @param attributeValuesId
 	 * @return ExecutingStatus
 	 */
 	@RequestMapping(value = "/delete/{attributeValuesId}", method = RequestMethod.DELETE)
-	 public ExecutingStatus deleteAttributeValuesById(@PathVariable Integer attributeValuesId) {
+	public ExecutingStatus deleteAttributeValuesById(@PathVariable Integer attributeValuesId) {
 		return attributeValuesService.deleteAttributeValuesById(attributeValuesId);
 	}
-	
+
 	/**
 	 * Method for getting all attribute values of participant in group
+	 * 
 	 * @param groupId
 	 * @param participantId
 	 * @return List<AttributeValues>

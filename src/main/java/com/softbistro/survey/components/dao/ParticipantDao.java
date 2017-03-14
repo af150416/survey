@@ -26,9 +26,9 @@ public class ParticipantDao implements IParticipant {
 
 	private final static String SQL_FOR_UPDATING_PARTICIPANT = "UPDATE survey.participant AS p SET p.first_name= ?, p.last_name= ?, p.email = ?, p.password= ? WHERE p.id= ?";
 
-	private final static String SQL_FOR_DELETING_PARTICIPANT = "DELETE p, c, av, a FROM survey.participant AS p left join survey.connect_group_participant AS c on c.group_id=p.id "
+	private final static String SQL_FOR_DELETING_PARTICIPANT = "UPDATE survey.participant AS p left join survey.connect_group_participant AS c on c.group_id=p.id "
 			+ "left join survey.attribute_values AS av on av.participant_id=p.id left join survey.answers AS a on a.participant_id=p.id "
-			+ "WHERE p.email= ?";
+			+ "SET p.status = 'DELETE', c.status = 'DELETE', av.status = 'DELETE', a.status = 'DELETE' WHERE p.email = ?";
 
 	private final static String SQL_FOR_GETTING_PARTICIPANT_BY_ID = "SELECT * FROM survey.participant WHERE survey.participant.id= ?";
 
@@ -44,7 +44,8 @@ public class ParticipantDao implements IParticipant {
 	 */
 	@Override
 	public ExecutingStatus setParticipant(Participant participant) {
-		if (jdbcTemplate.queryForObject(SQL_FOR_CHECKING_THE_PARTICIPANT_EXISTING_BY_EMAIL, Integer.class, participant.geteMail()) > 0) {
+		if (jdbcTemplate.queryForObject(SQL_FOR_CHECKING_THE_PARTICIPANT_EXISTING_BY_EMAIL, Integer.class,
+				participant.geteMail()) > 0) {
 			return ExecutingStatus.ALREADY_EXIST;
 		}
 		int status = jdbcTemplate.update(SQL_FOR_SETTING_PARTICIPANT, participant.getFirstName(),
@@ -63,7 +64,8 @@ public class ParticipantDao implements IParticipant {
 	 */
 	@Override
 	public ExecutingStatus updateParticipant(Participant participant) {
-		if (jdbcTemplate.queryForObject(SQL_FOR_CHECKING_THE_PARTICIPANT_EXISTING_BY_EMAIL, Integer.class, participant.geteMail()) == 0) {
+		if (jdbcTemplate.queryForObject(SQL_FOR_CHECKING_THE_PARTICIPANT_EXISTING_BY_EMAIL, Integer.class,
+				participant.geteMail()) == 0) {
 			return ExecutingStatus.NOT_EXIST;
 		}
 		int status = jdbcTemplate.update(SQL_FOR_UPDATING_PARTICIPANT, participant.getFirstName(),
@@ -82,7 +84,8 @@ public class ParticipantDao implements IParticipant {
 	 */
 	@Override
 	public ExecutingStatus deleteParticipant(String email) {
-		if (jdbcTemplate.queryForObject(SQL_FOR_CHECKING_THE_PARTICIPANT_EXISTING_BY_EMAIL, Integer.class, email) == 0) {
+		if (jdbcTemplate.queryForObject(SQL_FOR_CHECKING_THE_PARTICIPANT_EXISTING_BY_EMAIL, Integer.class,
+				email) == 0) {
 			return ExecutingStatus.NOT_EXIST;
 		}
 		int status = jdbcTemplate.update(SQL_FOR_DELETING_PARTICIPANT, email);
@@ -100,7 +103,8 @@ public class ParticipantDao implements IParticipant {
 	 */
 	@Override
 	public Participant getParticipantById(Integer participantId) {
-		if (jdbcTemplate.queryForObject(SQL_FOR_CHECKING_THE_PARTICIPANT_EXISTING_BY_ID, Integer.class, participantId) == 0) {
+		if (jdbcTemplate.queryForObject(SQL_FOR_CHECKING_THE_PARTICIPANT_EXISTING_BY_ID, Integer.class,
+				participantId) == 0) {
 			return new Participant();
 		}
 		return (Participant) jdbcTemplate.queryForObject(SQL_FOR_GETTING_PARTICIPANT_BY_ID,

@@ -27,9 +27,10 @@ public class GroupDao implements IGroup {
 	private final static String SQL_FOR_GETTING_GROUP_BY_ID = "SELECT g.id, g.client_id, g.group_name, g.created_date, g.modified_date FROM survey.group AS g WHERE g.id = ?";
 	private final static String SQL_FOR_GETTING_GROUP_BY_CLIENT = "SELECT g.id, g.client_id, g.group_name, g.created_date, g.modified_date FROM survey.group AS g WHERE g.client_id = ?";
 	private final static String SQL_FOR_UPDATING_GROUP_BY_ID = "UPDATE survey.group AS g SET g.group_name = ? WHERE g.id = ?";
-	private final static String SQL_FOR_DELETING_GROUP_BY_ID = "DELETE g, cp, cs, at, av From survey.group AS g LEFT JOIN survey.connect_group_participant AS cp ON cp.group_id=g.id "
+	private final static String SQL_FOR_DELETING_GROUP_BY_ID = "UPDATE survey.group AS g LEFT JOIN survey.connect_group_participant AS cp ON cp.group_id=g.id "
 			+ "LEFT JOIN survey.connect_group_survey AS cs ON cs.group_id=g.id LEFT JOIN survey.attributes AS at ON at.group_id=g.id "
-			+ "LEFT JOIN survey.attribute_values AS av ON av.attribute_id=at.id WHERE g.id = ?";
+			+ "LEFT JOIN survey.attribute_values AS av ON av.attribute_id=at.id "
+			+ "SET g.status = 'DELETE', cp.status = 'DELETE', cs.status = 'DELETE', at.status = 'DELETE', av.status = 'DELETE'WHERE g.id = ?";
 	private final static String SQL_FOR_CHECKING_GROUP_EXISTING_BY_ID = "SELECT COUNT(*) FROM survey.group AS g WHERE g.id = ?";
 	private final static String SQL_FOR_CHECKING_GROUP_EXISTING_BY_CLIENT_ID_AND_GROUP_NAME = "SELECT COUNT(*) FROM survey.group AS g WHERE g.client_id = ? AND g.group_name = ?";
 
